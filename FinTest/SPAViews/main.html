@@ -1,0 +1,55 @@
+﻿<br />
+<br />
+<br />
+
+<div>
+    <table>
+        <tr>
+            <th>Product</th>
+            <th>Price</th>
+            <th>Quantity in Cart</th>
+        </tr>
+        <tr ng-repeat="x in products.Products">
+            <td>{{ x.Description }}</td>
+            <td>{{ x.Price }}</td>
+            <td>{{ x.AmountInCart }}</td>
+            <td><button id={{x.Code}} ng-disabled="!x.Available" ng-click="AddItem($event)">Add to Cart</button></td>
+            <td ng-if="x.Available">Available in Stock</td>
+            <td ng-if="!x.Available" style="color:red;">Out of Stock</td>
+        </tr>
+    </table>
+
+    <br />
+    <hr />
+
+    <h2>Your Cart:</h2>
+    <hr />
+
+    <div class="container">
+        <div class="row">
+            <div class="item col-sm-1 ">
+                <h4>Total:</h4>
+            </div>
+            <div class="item col-sm-offset-1 col-sm-1 ">
+                <h5 ng-bind="products.Total | currency"></h5>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="item col-sm-1 ">
+                <h4>Discounts:</h4>
+            </div>
+            <div class="item col-sm-offset-1 col-sm-6 ">
+                <div ng-repeat="x in products.Discounts">
+                    <h5 class="inlineRow">{{x.Product}}</h5> -<h5 class="inlineRow" ng-bind="x.Discount | currency"></h5>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <br />
+    <br />
+    
+    <button ng-click="CheckOut()" ng-disabled="products.Total == 0">Check Out</button>
+
+</div>

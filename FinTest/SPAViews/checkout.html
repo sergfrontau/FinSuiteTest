@@ -1,0 +1,47 @@
+﻿<br />
+<br />
+<br />
+
+<h2>Please verify your Cart:</h2>
+<hr />
+
+<div class="container">
+    <div class="row">
+        <div class="item col-sm-1 ">
+            <h4>Total:</h4>
+        </div>
+        <div class="item col-sm-offset-1 col-sm-1 ">           
+           <h5 ng-bind="products.Total | currency"></h5>
+        </div>
+    </div>
+
+    <br/>
+
+    <div class="row">
+        <div class="item col-sm-2 ">
+            <h4>Cart Items:</h4>
+        </div>
+        <div class="item col-sm-6 ">
+            <div ng-repeat="x in products.Cart.CartItems">
+                <h5 class="inlineRow">{{x.Product.Description}}</h5> <h5 class="inlineRow" style="font-weight:bold;" ng-bind="x.Quantity"></h5><span style="font-weight:bold;"> Item(s)</span> - <h5 class="inlineRow" ng-bind="x.DiscountedPrice | currency"></h5>
+            </div>
+        </div>
+    </div>
+    
+    <br />
+
+    <div class="row">
+        <div class="item col-sm-1 ">
+            <h4>Discounts:</h4>
+        </div>
+        <div class="item col-sm-offset-1 col-sm-6 ">
+            <div ng-repeat="x in products.Discounts">
+                <h5 class="inlineRow">{{x.Product}}</h5> -<h5 class="inlineRow" ng-bind="x.Discount | currency"></h5>
+            </div>
+        </div>
+    </div>
+
+    <br />
+
+    <button ng-click="ProceedCheckout()">Proceed to Check Out</button>
+ </div>

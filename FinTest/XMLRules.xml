@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<RuleEngine>
+
+  <Rules>
+
+   
+    <Rule id="SMG_Rule1" desc="Samsung price" chainable="true"  priority="100">
+      <Condition><![CDATA[ SMGAmount > 0 ]]></Condition>
+      <Actions>       
+        <Evaluate factId="SMGPrice" ><![CDATA[SMGAmount * SMGPrice]]></Evaluate>
+      </Actions>
+    </Rule>
+
+    <Rule id="SPH_Rule1" desc="Sennheiser Earphones for $10 for each Samsung" chainable="true"  priority="100">
+      <Condition><![CDATA[ SMGAmount < SPHAmount ]]></Condition>
+      <Actions>       
+        <Evaluate factId="SPHPrice" ><![CDATA[SMGAmount * 10 + (SPHAmount - SMGAmount) * SPHPrice]]></Evaluate>
+      </Actions>
+    </Rule>
+
+    <Rule id="SPH_Rule2" desc="Sennheiser Earphones for $10 for each Samsung" chainable="true"  priority="100">
+      <Condition><![CDATA[ SMGAmount >= SPHAmount  ]]></Condition>
+      <Actions>
+        <Evaluate factId="SPHPrice" ><![CDATA[SPHAmount * 10]]></Evaluate>
+      </Actions>
+    </Rule>            
+    
+    <Rule id="CRM_Rule1" desc="Single Chromecast full price" chainable="true"  priority="100">
+      <Condition><![CDATA[ CRMAmount == 1  ]]></Condition>
+      <Actions>      
+        <Evaluate factId="CRMPrice" ><![CDATA[CRMPrice]]></Evaluate>
+      </Actions>
+    </Rule>
+
+    <Rule id="CRM_Rule2" desc="Second Chromecasts for $50" chainable="true"  priority="100">
+      <Condition><![CDATA[ CRMAmount == 2  ]]></Condition>
+      <Actions>
+        <Evaluate factId="CRMPrice" ><![CDATA[CRMPrice + 50]]></Evaluate>
+      </Actions>
+    </Rule>
+
+    <Rule id="CRM_Rule3" desc="Subsequent Chromecasts for $40" chainable="true"  priority="100">
+      <Condition><![CDATA[ CRMAmount > 2  ]]></Condition>
+      <Actions>
+        <Evaluate factId="CRMPrice" ><![CDATA[CRMPrice  + 50 + (CRMAmount - 2) * 40]]></Evaluate>
+      </Actions>
+    </Rule>
+
+   <Rule id="Totals_Rule" desc="Discounts on Total more than $100" chainable="true"  priority="100">
+      <Condition><![CDATA[ Sum >= 100  ]]></Condition>
+      <Actions>
+        <Evaluate factId="TotalPrice" ><![CDATA[Sum - (Sum / 10)]]></Evaluate>
+      </Actions>
+    </Rule>      
+
+  </Rules>
+
+
+
+  <Facts>
+
+    <Fact id="SMGAmount" desc="descr" type="double" modelId="Cart">
+      <xpath><![CDATA[ number(Cart/SMG/SMGAmount) ]]></xpath>
+    </Fact>
+
+    <Fact id="SMGPrice" desc="descr" type="double" modelId="Cart">
+      <xpath><![CDATA[ Cart/SMG/SMGPrice ]]></xpath>
+    </Fact>
+
+    <Fact id="SPHAmount" desc="descr" type="double" modelId="Cart">
+      <xpath><![CDATA[ number(Cart/SPH/SPHAmount) ]]></xpath>
+    </Fact>
+
+    <Fact id="SPHPrice" desc="descr" type="double" modelId="Cart">
+      <xpath><![CDATA[ Cart/SPH/SPHPrice ]]></xpath>
+    </Fact>   
+
+    <Fact id="CRMAmount" desc="descr" type="double" modelId="Cart">
+      <xpath><![CDATA[ number(Cart/CRM/CRMAmount) ]]></xpath>
+    </Fact>
+
+    <Fact id="CRMPrice" desc="descr" type="double" modelId="Cart">
+      <xpath><![CDATA[ Cart/CRM/CRMPrice ]]></xpath>
+    </Fact>
+    
+    <Fact id="Sum" desc="descr" type="double" modelId="Cart">
+      <xpath><![CDATA[ number(Cart/Totals/Sum) ]]></xpath>
+    </Fact>
+
+    <Fact id="TotalPrice" desc="descr" type="double" modelId="Cart">
+      <xpath><![CDATA[ Cart/Totals/TotalPrice ]]></xpath>
+    </Fact>
+
+  </Facts>
+
+</RuleEngine>
